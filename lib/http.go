@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -17,7 +16,7 @@ type HttpClient struct {
 
 func (this *HttpClient) Get(url string) ([]byte, error) {
 
-	resp, err := http.Get(urlStr)
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}

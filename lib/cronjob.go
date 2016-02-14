@@ -1,4 +1,4 @@
-package utils
+package lib
 
 import (
 	"time"
@@ -20,16 +20,13 @@ func InitCronJob(f CronJobFunc, args []interface{}, period time.Duration) *CronJ
 
 func (this *CronJob) Run() {
 
-	var timerChan = time.After(this.period)
-
 loop:
 	for {
 		select {
 		case <-this.quitChan:
 			break loop
-		case <-timerChan:
-			this.f(this.args)
-			timerChan = time.After(this.period)
+		case <-time.After(this.period):
+			this.f(this.args...)
 		}
 	}
 }

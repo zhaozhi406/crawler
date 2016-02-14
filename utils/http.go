@@ -1,9 +1,12 @@
 package utils
 
 import (
+	"encoding/json"
+	"errors"
+	log "github.com/kdar/factorlog"
+	"github.com/zhaozhi406/crawler/types"
 	"net/http"
 	"strconv"
-	"github.com/zhaozhi406/crawler/types"
 )
 
 //检查http请求中必须的参数是否存在，空字符串也算不存在；
@@ -14,10 +17,10 @@ func CheckHttpParams(req *http.Request, keys map[string]string) (string, error) 
 
 	for key, t := range keys {
 		val := req.Form.Get(key)
-		if val == '' {
+		if val == "" {
 			return key, errors.New("missing http param: " + key)
 		}
-		if t == "int"  {
+		if t == "int" {
 			_, err := strconv.Atoi(val)
 			if err != nil {
 				return key, errors.New("http param '" + key + "' type error, require " + t)
@@ -25,7 +28,7 @@ func CheckHttpParams(req *http.Request, keys map[string]string) (string, error) 
 		}
 
 	}
-	return '', nil
+	return "", nil
 }
 
 //输出JsonResult到http response
